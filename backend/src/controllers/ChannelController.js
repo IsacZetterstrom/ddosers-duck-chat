@@ -29,4 +29,21 @@ async function getAllChannels(req, res) {
   res.send(channels);
 }
 
-export default { getChannels };
+async function putChannel(req, res) {
+  const name = req.body.name;
+  if (name != undefined) {
+    const newChannel = new Channel({
+      name,
+      messages: [],
+      creatorId: "234325",
+      channelType: "public",
+    });
+
+    newChannel.save();
+    res.status(201).send("Channel created!");
+  } else {
+    res.status(400).send("Bad request");
+  }
+}
+
+export default { getChannels, putChannel };

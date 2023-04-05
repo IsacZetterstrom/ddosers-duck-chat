@@ -11,8 +11,7 @@ router.get("/test", (req, res) => {
 router
   .route("/channel*")
   .get(ChannelController.getChannels)
-  .get()
-  .put()
+  .put(ChannelController.putChannel)
   .post()
   .delete();
 
