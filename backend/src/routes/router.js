@@ -2,6 +2,7 @@ import express from "express";
 import ChannelController from "../controllers/ChannelController.js";
 import BroadcastController from "../controllers/BroadcastController.js";
 import UserController from "../controllers/UserController.js";
+import authenticated from "../filter/authenticated.js";
 
 const router = express.Router();
 
@@ -10,6 +11,8 @@ router.get("/test", (req, res) => {
 });
 
 router.route("/user").post(UserController.login).put(UserController.createUser);
+
+router.use(authenticated.authenticate);
 
 router
   .route("/channel*")
