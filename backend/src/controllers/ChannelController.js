@@ -2,7 +2,7 @@ import { Channel } from "../db/models/Channel.js";
 
 function getChannels(req, res) {
   const id = req.query.id;
-  console.log(id);
+
   if (id) {
     getChannelById(req, res, id);
   } else {
@@ -10,16 +10,23 @@ function getChannels(req, res) {
   }
 }
 
-function getChannelById(req, res, id) {}
+async function getChannelById(req, res, _id) {
+  try {
+    const channel = await Channel.findOne({
+      _id, // samma som _id:_id
+      channelType: "public",
+    });
+
+    res.send(channel);
+  } catch (error) {
+    res.status(400).send("Channel does not exist");
+  }
+}
 
 async function getAllChannels(req, res) {
-  const channels = await Channel.find({});
+  const channels = await Channel.find({ channelType: "public" });
 
   res.send(channels);
 }
 
-function getBroadcast(req, res) {
-  res.send("broadcast channel");
-}
-
-export default { getChannels, getBroadcast };
+export default { getChannels };
