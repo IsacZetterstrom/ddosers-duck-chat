@@ -8,9 +8,13 @@ function App() {
   useEffect(() => {
     if (!ref.current) {
       ref.current = true;
-      setIo(io("ws://localhost:5050"));
+      const newIo = io("ws://localhost:5050");
+      newIo.on("updatedChannel", (value) => {
+        console.log(value);
+      });
+      setIo(newIo);
     }
-  });
+  }, []);
 
   return (
     <div>

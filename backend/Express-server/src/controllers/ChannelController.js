@@ -1,5 +1,6 @@
 import { Channel } from "../db/models/Channel.js";
 import { Message } from "../db/models/newMessage.js";
+import fetch from "node-fetch";
 
 function getChannels(req, res) {
   const id = req.query.id;
@@ -40,7 +41,17 @@ async function putChannel(req, res) {
       channelType: "public",
     });
 
-    newChannel.save();
+    await newChannel.save();
+    try {
+      fetch("http://127.0.0.1:5050/updatedChannel", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ channel: newChannel }),
+      });
+    } catch (error) {
+      console.log("Fetch request failed!");
+    }
+
     res.status(201).send("Channel created!");
   } else {
     res.status(400).send("Bad request");
