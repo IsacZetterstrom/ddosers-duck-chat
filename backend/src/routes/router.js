@@ -12,8 +12,8 @@ router
   .route("/channel*")
   .get(ChannelController.getChannels)
   .put(ChannelController.putChannel)
-  .post()
-  .delete();
+  .post(ChannelController.postChannel)
+  .delete(ChannelController.deleteChannel);
 
 router.get("/channels", (req, res) => {
   res.send("advertised channels");
