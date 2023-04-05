@@ -8,6 +8,7 @@ function authenticate(req, res, next) {
   }
   const payload = jwtUtil.verify(token);
   if (payload.username) {
+    req.jwtPayload = payload;
     next();
   } else {
     res.status(401).send("Your token is invalid!");

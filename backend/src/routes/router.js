@@ -3,7 +3,7 @@ import ChannelController from "../controllers/ChannelController.js";
 import BroadcastController from "../controllers/BroadcastController.js";
 import UserController from "../controllers/UserController.js";
 import authenticated from "../filter/authenticated.js";
-
+import isAdmin from "../filter/isAdmin.js";
 const router = express.Router();
 
 router.get("/test", (req, res) => {
@@ -28,6 +28,6 @@ router.get("/channels", (req, res) => {
 router
   .route("/broadcast")
   .get(BroadcastController.getBroadcast)
-  .post(BroadcastController.postBroadcast);
+  .post(isAdmin.authenticateAdmin, BroadcastController.postBroadcast);
 
 export default router;
