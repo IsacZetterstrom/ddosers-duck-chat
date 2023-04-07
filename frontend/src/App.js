@@ -12,6 +12,9 @@ function App() {
       newIo.on("updatedChannel", (value) => {
         console.log(value);
       });
+      newIo.on("newMessage", (value) => {
+        console.log(value);
+      });
       setIo(newIo);
     }
   }, []);

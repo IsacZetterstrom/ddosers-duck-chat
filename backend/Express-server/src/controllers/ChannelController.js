@@ -79,6 +79,25 @@ async function postChannel(req, res) {
       { $push: { messages: newMessage } }
     );
 
+    try {
+      const token = jwtUtil.createToken({ role: "express-server" });
+
+      const response = await fetch("http://localhost:5050/newMessage", {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ channelId, newMessage }),
+      });
+
+      const text = await response.text();
+
+      console.log(text);
+    } catch (error) {
+      console.log(error);
+    }
+
     res.status(201).send("message sent");
   } else {
     res.status(400).send("Missing information");
