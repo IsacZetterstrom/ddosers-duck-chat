@@ -1,6 +1,9 @@
 import express from "express";
 import sockets from "../../socket.js";
+import jwtVerify from "../filter/jwtVerify.js";
 const router = express.Router();
+
+router.use(jwtVerify.isRequestFromServer);
 
 router.route("/updatedChannel").put((req, res) => {
   console.log("Updated channel!");

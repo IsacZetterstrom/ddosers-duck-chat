@@ -1,5 +1,6 @@
 import { Channel } from "../db/models/Channel.js";
 import { Message } from "../db/models/newMessage.js";
+import jwtUtil from "../utils/jwtUtil.js";
 import fetch from "node-fetch";
 
 function getChannels(req, res) {
@@ -43,11 +44,17 @@ async function putChannel(req, res) {
 
     await newChannel.save();
     try {
-      fetch("http://127.0.0.1:5050/updatedChannel", {
+      const token = jwtUtil.createToken({ role: "express-server" });
+
+      const response = await fetch("http://127.0.0.1:5050/updatedChannel", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { Authorization: token, "Content-Type": "application/json" },
         body: JSON.stringify({ channel: newChannel }),
       });
+
+      const text = await response.text();
+
+      console.log(text);
     } catch (error) {
       console.log("Fetch request failed!");
     }
