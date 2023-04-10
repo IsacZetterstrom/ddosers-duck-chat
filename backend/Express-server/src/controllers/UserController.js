@@ -13,7 +13,11 @@ async function login(req, res) {
           username: user.username,
           userRole: user.userRole,
         });
-        res.send({ token, message: "You have logged in!" });
+        res.send({
+          token,
+          userRole: user.userRole,
+          message: "You have logged in!",
+        });
       } else {
         res.status(404).send("Incorrect username or password!");
       }

@@ -18,6 +18,7 @@ export default function Login() {
     if (response.status === 200) {
       const data = await response.json();
       window.sessionStorage.setItem("sessionToken", data.token);
+      window.sessionStorage.setItem("userRole", data.userRole);
       navigate("/channels");
     } else {
       console.log("fel användare");

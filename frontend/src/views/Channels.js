@@ -1,20 +1,29 @@
 import { io } from "socket.io-client";
 import { useState, useEffect, useRef } from "react";
 import { fetchJson, getFormData } from "../fetch";
+import { useNavigate } from "react-router-dom";
 
 export default function Channels() {
+  const navigate = useNavigate();
   const [channels, setChannels] = useState([]);
   const [channel, setChannel] = useState(undefined);
   const [clientIo, setIo] = useState();
   const ref = useRef(false);
 
   async function fetchChannels(event) {
-    const response = await fetchJson(
+    const broadcastResponse = await fetchJson(
+      "http://localhost:3001/ducks/api/broadcast",
+      "GET"
+    );
+
+    const chanelsResponse = await fetchJson(
       "http://localhost:3001/ducks/api/channel",
       "GET"
     );
-    const data = await response.json();
-    setChannels(data);
+    const broadcastData = await broadcastResponse.json();
+    const channelsData = await chanelsResponse.json();
+
+    setChannels([broadcastData, ...channelsData]);
   }
 
   function onChannelClick(channelIndex) {
@@ -32,7 +41,13 @@ export default function Channels() {
       json
     );
   }
-  async function deleteChannel(event) {}
+  async function deleteChannel(event) {
+    event.preventDefault();
+    const reponse = await fetchJson(
+      `http://localhost:3001/ducks/api/channel/?id=${channels[channel]._id}`,
+      "DELETE"
+    );
+  }
 
   async function createChannel(event) {
     event.preventDefault();
@@ -93,21 +108,31 @@ export default function Channels() {
         </div>
       </div>
       <div>
+        {window.sessionStorage.getItem("userRole") === "admin" && (
+          <button onClick={() => navigate("/admin")}>Admin</button>
+        )}
         {channel !== undefined &&
-          channels[channel].messages.map((element) => {
-            return (
-              <div key={element._id}>
-                <h3>{element.sender}</h3>
-                <p>{element.message}</p>
-              </div>
-            );
-          })}
+          channels[channel].channelType === "public" && (
+            <button onClick={deleteChannel}>Delete channel</button>
+          )}
         <div>
-          <form onSubmit={sendMessage}>
-            <input name="message" placeholder="Write Message..." required />
-            <button type="submit">Send</button>
-          </form>
+          {channel !== undefined &&
+            channels[channel].messages.map((element, index) => {
+              return (
+                <div key={element._id || "message-id-" + index}>
+                  <h3>{element.sender || element.title}</h3>
+                  <p>{element.message}</p>
+                </div>
+              );
+            })}
         </div>
+        {channel !== undefined &&
+          channels[channel].channelType === "public" && (
+            <form onSubmit={sendMessage}>
+              <input name="message" placeholder="Write Message..." required />
+              <button type="submit">Send</button>
+            </form>
+          )}
       </div>
     </main>
   );

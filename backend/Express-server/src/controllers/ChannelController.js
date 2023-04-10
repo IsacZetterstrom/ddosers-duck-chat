@@ -1,5 +1,6 @@
 import { Channel } from "../db/models/Channel.js";
 import { Message } from "../db/models/newMessage.js";
+import { User } from "../db/models/User.js";
 import jwtUtil from "../utils/jwtUtil.js";
 import fetch from "node-fetch";
 
@@ -34,11 +35,11 @@ async function getAllChannels(req, res) {
 
 async function putChannel(req, res) {
   const name = req.body.name;
-  if (name != undefined) {
+  if (name != undefined && (await Channel.findOne({ name })) == null) {
     const newChannel = new Channel({
       name,
       messages: [],
-      creatorId: "234325",
+      creator: req.jwtPayload.username,
       channelType: "public",
     });
 
@@ -107,8 +108,15 @@ async function postChannel(req, res) {
 async function deleteChannel(req, res) {
   const channelId = req.query.id;
   if (channelId != undefined) {
-    const channel = await Channel.deleteOne({ _id: channelId });
+    const user = req.jwtPayload.username;
+    console.log(user);
 
+    const result = await Channel.deleteOne({
+      _id: channelId,
+      creator: user,
+      channelType: "public",
+    });
+    console.log(result);
     res.status(200).send("Deleted channel");
   } else {
     res.status(400).send("Channel ID not provided");

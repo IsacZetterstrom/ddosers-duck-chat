@@ -3,16 +3,16 @@ import { Channel } from "../db/models/Channel.js";
 async function getBroadcast(req, res) {
   const channel = await Channel.findOne({ channelType: "nödkanal" });
 
-  res.send(channel.messages);
+  res.send(channel);
 }
 
 async function postBroadcast(req, res) {
-  const { title, content } = req.body;
+  const { title, message } = req.body;
 
-  if (title && content) {
+  if (title && message) {
     const result = await Channel.updateOne(
       { channelType: "nödkanal" },
-      { $push: { messages: { title, content } } }
+      { $push: { messages: { title, message } } }
     );
 
     res.send(result);
