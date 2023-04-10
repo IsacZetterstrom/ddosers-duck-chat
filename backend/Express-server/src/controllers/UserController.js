@@ -25,9 +25,16 @@ async function login(req, res) {
   }
 }
 
-function createUser(req, res) {
+async function createUser(req, res) {
   const { username, password } = req.body;
   if (username && password) {
+    const user = await User.findOne({ username });
+
+    if (user != null) {
+      res.status(409).send("That username is already taken!");
+      return;
+    }
+
     bcrypt.hash(
       password,
       Number(process.env.SALT_ROUNDS),

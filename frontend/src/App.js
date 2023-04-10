@@ -1,5 +1,8 @@
 import { io } from "socket.io-client";
 import { useEffect, useRef, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CreateUser from "./views/CreateUser";
+import Login from "./views/Login";
 
 function App() {
   const ref = useRef(false);
@@ -20,9 +23,16 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1>Duck</h1>
-    </div>
+    <>
+      <BrowserRouter>
+        <h1>Duck</h1>
+        <Routes>
+          {/* <Route index element={}/> */}
+          <Route path="/createUser" element={<CreateUser />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
