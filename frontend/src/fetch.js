@@ -6,7 +6,6 @@ export async function fetchJson(adress, method, data) {
       authorization: window.sessionStorage.getItem("sessionToken"),
     },
   };
-  //   console.log(fetchOptions);
   if (data !== null) {
     fetchOptions.body = JSON.stringify(data);
   }
@@ -18,5 +17,3 @@ export function getFormData(form) {
 
   return Object.fromEntries(formData);
 }
-
-async function loginUser() {}

@@ -6,9 +6,7 @@ const router = express.Router();
 router.use(jwtVerify.isRequestFromServer);
 
 router.route("/updatedChannel").put((req, res) => {
-  console.log("Updated channel!");
   const channel = req.body.channel;
-  console.log(channel);
   for (let i = 0; i < sockets.length; i++) {
     sockets[i].emit("updatedChannel", channel);
   }
@@ -16,7 +14,6 @@ router.route("/updatedChannel").put((req, res) => {
 });
 
 router.post("/newMessage", (req, res) => {
-  console.log("New message route!");
   const { channelId, newMessage } = req.body;
   for (let i = 0; i < sockets.length; i++) {
     sockets[i].emit("newMessage", { channelId, newMessage });

@@ -109,7 +109,6 @@ async function deleteChannel(req, res) {
   const channelId = req.query.id;
   if (channelId != undefined) {
     const user = req.jwtPayload.username;
-    console.log(user);
 
     const result = await Channel.deleteOne({
       _id: channelId,

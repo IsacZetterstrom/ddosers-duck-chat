@@ -1,11 +1,15 @@
 import { fetchJson, getFormData } from "../fetch";
+import { useNavigate } from "react-router-dom";
 
 export default function Admin() {
+  const navigate = useNavigate();
   async function broadcastMessage(event) {
     event.preventDefault();
     const json = getFormData(event.target);
 
     await fetchJson(`http://localhost:3001/ducks/api/broadcast`, "POST", json);
+
+    navigate("/channels");
   }
 
   return (
