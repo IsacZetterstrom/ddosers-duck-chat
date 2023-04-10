@@ -67,7 +67,7 @@ async function putChannel(req, res) {
 
 async function postChannel(req, res) {
   const channelId = req.query.id;
-  const sender = req.body.name;
+  const sender = req.jwtPayload.username;
   const message = req.body.message;
   if (sender && channelId && message) {
     const newMessage = new Message({
