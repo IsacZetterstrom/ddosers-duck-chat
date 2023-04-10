@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchJson } from "../fetch";
+import { fetchJson, getFormData } from "../fetch";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateUser(props) {
@@ -10,9 +10,7 @@ export default function CreateUser(props) {
     event.preventDefault();
     setServerMessage("");
 
-    const formData = new FormData(event.target);
-
-    const json = Object.fromEntries(formData);
+    const json = getFormData(event.target);
 
     const response = await fetchJson(
       "http://localhost:3001/ducks/api/user",

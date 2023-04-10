@@ -1,20 +1,27 @@
-import { fetchJson } from "../fetch";
+import { fetchJson, getFormData } from "../fetch";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   async function loginForm(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const json = Object.fromEntries(formData);
+    const json = getFormData(event.target);
+
     const response = await fetchJson(
       "http://localhost:3001/ducks/api/user",
       "POST",
       json
     );
 
-    const data = await response.json();
-
-    window.sessionStorage.setItem("sessionToken", data.token);
+    if (response.status === 200) {
+      const data = await response.json();
+      window.sessionStorage.setItem("sessionToken", data.token);
+      navigate("/channels");
+    } else {
+      console.log("fel användare");
+    }
   }
   return (
     <div>

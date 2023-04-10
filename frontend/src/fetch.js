@@ -6,11 +6,17 @@ export async function fetchJson(adress, method, data) {
       authorization: window.sessionStorage.getItem("sessionToken"),
     },
   };
-  console.log(fetchOptions);
+  //   console.log(fetchOptions);
   if (data !== null) {
     fetchOptions.body = JSON.stringify(data);
   }
   return fetch(adress, fetchOptions);
+}
+
+export function getFormData(form) {
+  const formData = new FormData(form);
+
+  return Object.fromEntries(formData);
 }
 
 async function loginUser() {}
