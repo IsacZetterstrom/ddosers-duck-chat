@@ -14,6 +14,7 @@ export default function Channels() {
       "GET"
     );
     const data = await response.json();
+    setChannels(data);
   }
 
   function onChannelClick(channelIndex) {
@@ -25,13 +26,21 @@ export default function Channels() {
 
     const json = getFormData(event.target);
 
-    const response = await fetchJson(
+    await fetchJson(
       `http://localhost:3001/ducks/api/channel/?id=${channels[channel]._id}`,
       "POST",
       json
     );
+  }
+  async function deleteChannel(event) {}
 
-    // console.log(await response.text());
+  async function createChannel(event) {
+    event.preventDefault();
+    const response = await fetchJson(
+      "http://localhost:3001/ducks/api/channel",
+      "PUT",
+      getFormData(event.target)
+    );
   }
 
   useEffect(() => {
@@ -40,7 +49,13 @@ export default function Channels() {
       fetchChannels();
       const newIo = io("ws://localhost:5050");
       newIo.on("updatedChannel", (value) => {
-        console.log(value);
+        setChannels((oldValue) => {
+          const channelArray = [];
+          channelArray.push(...oldValue);
+          channelArray.push(value);
+
+          return channelArray;
+        });
       });
       newIo.on("newMessage", (value) => {
         setChannels((oldValue) => {
@@ -61,15 +76,21 @@ export default function Channels() {
   return (
     <main>
       <div>
-        {channels.map((element, index) => {
-          return (
-            <p
-              key={"channel-name-" + index}
-              onClick={() => onChannelClick(index)}>
-              {element.name}
-            </p>
-          );
-        })}
+        <form onSubmit={createChannel}>
+          <input name="name" placeholder="Channel name..." required />
+          <button type="submit">Create channel</button>
+        </form>
+        <div>
+          {channels.map((element, index) => {
+            return (
+              <p
+                key={"channel-name-" + index}
+                onClick={() => onChannelClick(index)}>
+                {element.name}
+              </p>
+            );
+          })}
+        </div>
       </div>
       <div>
         {channel !== undefined &&
@@ -83,7 +104,7 @@ export default function Channels() {
           })}
         <div>
           <form onSubmit={sendMessage}>
-            <input name="message" placeholder="Write Message..." />
+            <input name="message" placeholder="Write Message..." required />
             <button type="submit">Send</button>
           </form>
         </div>
