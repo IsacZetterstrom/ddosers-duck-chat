@@ -1,1 +1,142 @@
 @use "../abstract/variables" as *;
+/* Hide scrollbar for Chrome, Safari and Opera */
+.message-container::-webkit-scrollbar {
+  display: none;
+}
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  height: 70vh;
+  .channels-container {
+    width: 30%;
+    position: relative;
+    padding: 1em;
+    background-color: $CDarkerBlue;
+    border-radius: 1em;
+    border: 3px solid $CDarkGreen;
+
+    .admin-container {
+      position: absolute;
+      top: 1em;
+      left: 1em;
+    }
+    .create-channel-container {
+      display: flex;
+      flex-direction: column;
+      padding: 4em 0 0 0;
+      margin: 1em;
+      height: 3em;
+      form {
+        display: flex;
+        flex-direction: column;
+
+        background-color: $CBlue;
+        border-radius: 0.3em;
+
+        input,
+        button {
+          background-color: transparent;
+          border: none;
+        }
+        input {
+          height: 3em;
+          font-size: 1.2em;
+        }
+        button {
+          height: 2em;
+          font-size: 1em;
+          border-top: 1px solid $CBrightGreen;
+          border-radius: 0.3em;
+        }
+      }
+    }
+    .channel-header {
+      margin: 0 auto;
+      padding: 0.3em;
+    }
+    .individual-channel {
+      display: flex;
+      flex-direction: column;
+      .channel {
+        border-bottom: 3px solid $CBrightGreen;
+        padding: 0 0 0.3em 0;
+      }
+    }
+  }
+}
+
+.message-section {
+  background-color: $CDarkerBlue;
+  padding: 1em;
+  border-radius: 0.25em;
+
+  .message-container {
+    position: relative;
+    display: block;
+    height: 75%;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    .message {
+      position: relative;
+      display: block;
+      width: 80%;
+      margin-bottom: 3em;
+      padding: 0.25em;
+      border-radius: 0.25em;
+    }
+    .message::after {
+      width: 25px;
+      height: 25px;
+      content: "";
+      position: absolute;
+    }
+    .message:nth-child(odd) {
+      background-color: $CBlue;
+      margin-right: 0.25em;
+      margin-left: auto;
+    }
+    .message:nth-child(odd)::after {
+      right: -10px;
+      bottom: -10px;
+      background-color: $CBlue;
+      border-bottom-right-radius: 0.25em;
+      border-bottom-left-radius: 1.5em;
+      border-top-right-radius: 1.5em;
+    }
+    .message:nth-child(even) {
+      background-color: $CWhite;
+      color: $CBlack;
+      margin-right: auto;
+      margin-left: 0.25em;
+    }
+    .message:nth-child(even)::after {
+      left: -10px;
+      bottom: -10px;
+      background-color: $CWhite;
+      border-bottom-left-radius: 0.25em;
+      border-bottom-right-radius: 1.5em;
+      border-top-left-radius: 1.5em;
+    }
+  }
+  form {
+    height: 10%;
+    background-color: $CBlue;
+    margin: 0.5em;
+    padding: 0 1em;
+    border-radius: 0.25em;
+    display: flex;
+    align-items: center;
+    button {
+      border: 0.15em solid $CBlack;
+    }
+    button,
+    input {
+      border: none;
+      border-radius: 0.25em;
+      color: $CWhite;
+      background-color: $CBlue;
+      font-size: 1.25rem;
+    }
+  }
+}

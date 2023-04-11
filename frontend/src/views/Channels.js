@@ -76,41 +76,61 @@ export default function Channels() {
 
   return (
     <main className="main-container">
-      <div className="create-channel-container">
-        <form onSubmit={createChannel}>
-          <input name="name" placeholder="Channel name..." required />
-          <button type="submit">Create channel</button>
-        </form>
-        <div className="channels-container">
-          {channels.map((element, index) => {
-            return (
-              <p
-                key={"channel-name-" + index}
-                onClick={() => onChannelClick(index)}>
-                {element.name}
-              </p>
-            );
-          })}
+      <div className="channels-container">
+        <div className="admin-container">
+          {" "}
+          {window.sessionStorage.getItem("userRole") === "admin" && (
+            <button onClick={() => navigate("/admin")}>Admin</button>
+          )}
+        </div>
+        <div className="create-channel-container">
+          <form onSubmit={createChannel}>
+            <input name="name" placeholder="Channel name..." required />
+            <button type="submit">Create channel</button>
+          </form>
+          <h2 className="channel-header">Channels</h2>
+          <div className="individual-channel">
+            {channels.map((element, index) => {
+              return (
+                <h2
+                  className="channel"
+                  key={"channel-name-" + index}
+                  onClick={() => onChannelClick(index)}>
+                  {element.name}
+                </h2>
+              );
+            })}
+          </div>
         </div>
       </div>
-      <div>
-        {window.sessionStorage.getItem("userRole") === "admin" && (
-          <button onClick={() => navigate("/admin")}>Admin</button>
-        )}
+
+      <section className="message-section">
         {channel !== undefined &&
           channels[channel].channelType === "public" && (
             <button onClick={deleteChannel}>Delete channel</button>
           )}
-        <div>
+        <div className="message-container">
           {channel !== undefined &&
-            channels[channel].messages.map((element, index) => {
-              return (
-                <div key={element._id || "message-id-" + index}>
-                  <h3>{element.sender || element.title}</h3>
-                  <p>{element.message}</p>
-                </div>
+            (() => {
+              const newchannels = channels[channel].messages.map(
+                (element, index) => {
+                  return (
+                    <div
+                      className="message"
+                      key={element._id || "message-id-" + index}>
+                      <h3>{element.sender || element.title}</h3>
+                      <p>{element.message}</p>
+                    </div>
+                  );
+                }
               );
-            })}
+              setTimeout(() => {
+                const messageCont =
+                  document.querySelector(".message-container");
+                messageCont.scrollTo(0, messageCont.scrollHeight);
+              }, 50);
+              return newchannels;
+            })()}
         </div>
         {channel !== undefined &&
           channels[channel].channelType === "public" && (
@@ -119,7 +139,7 @@ export default function Channels() {
               <button type="submit">Send</button>
             </form>
           )}
-      </div>
+      </section>
     </main>
   );
 }

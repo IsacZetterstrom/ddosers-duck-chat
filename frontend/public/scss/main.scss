@@ -1,1 +1,7 @@
+@use "./abstract/variables" as *;
 @use "./pages/channels" as *;
+
+body {
+  background-color: $CBlue;
+  color: $CWhite;
+}
