@@ -10,22 +10,6 @@ export default function Channels() {
   const [clientIo, setIo] = useState();
   const ref = useRef(false);
 
-  async function fetchChannels(event) {
-    const broadcastResponse = await fetchJson(
-      "http://localhost:3001/ducks/api/broadcast",
-      "GET"
-    );
-
-    const chanelsResponse = await fetchJson(
-      "http://localhost:3001/ducks/api/channel",
-      "GET"
-    );
-    const broadcastData = await broadcastResponse.json();
-    const channelsData = await chanelsResponse.json();
-
-    setChannels([broadcastData, ...channelsData]);
-  }
-
   function onChannelClick(channelIndex) {
     setChannel(channelIndex);
   }
@@ -61,8 +45,10 @@ export default function Channels() {
   useEffect(() => {
     if (!ref.current) {
       ref.current = true;
-      fetchChannels();
       const newIo = io("ws://localhost:5050");
+      newIo.on("channels", (channels) => {
+        setChannels(channels);
+      });
       newIo.on("updatedChannel", (value) => {
         setChannels((oldValue) => {
           const channelArray = [];
@@ -89,13 +75,13 @@ export default function Channels() {
   }, [setIo, setChannel, setChannels, channels]);
 
   return (
-    <main>
-      <div>
+    <main className="main-container">
+      <div className="create-channel-container">
         <form onSubmit={createChannel}>
           <input name="name" placeholder="Channel name..." required />
           <button type="submit">Create channel</button>
         </form>
-        <div>
+        <div className="channels-container">
           {channels.map((element, index) => {
             return (
               <p

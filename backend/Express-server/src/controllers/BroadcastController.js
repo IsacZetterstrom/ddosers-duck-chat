@@ -3,7 +3,7 @@ import { Channel } from "../db/models/Channel.js";
 import jwtUtil from "../utils/jwtUtil.js";
 
 async function getBroadcast(req, res) {
-  const channel = await Channel.findOne({ channelType: "nödkanal" });
+  const channel = await Channel.findOne({ channelType: "nödkanal" }); //<<<< ============================
 
   res.send(channel);
 }

@@ -14,6 +14,7 @@ function getChannels(req, res) {
   }
 }
 
+//<<<< ============================
 async function getChannelById(req, res, _id) {
   try {
     const channel = await Channel.findOne({
@@ -28,6 +29,7 @@ async function getChannelById(req, res, _id) {
 }
 
 async function getAllChannels(req, res) {
+  //<<<< ============================
   const channels = await Channel.find({ channelType: "public" });
 
   res.send(channels);
