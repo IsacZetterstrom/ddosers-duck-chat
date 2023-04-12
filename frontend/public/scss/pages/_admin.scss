@@ -1,6 +1,32 @@
 @use "../abstract/variables" as *;
+// .admin-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   height: 50vh;
+//   width: 30vw;
 
-.login-container {
+//   flex-direction: column;
+//   background-color: $CDarkBlue;
+//   input {
+//     height: 2.5em;
+//     width: 70%;
+//     background-color: $CBlue;
+//     border: 3px solid $CDarkGreen;
+//   }
+//   button {
+//     height: 2.5em;
+//     width: 50%;
+//     background-color: $CBlue;
+//     border: none;
+//   }
+//   button:hover {
+//     background-color: $CDarkGreen;
+//     transition: 0.25s;
+//   }
+// }
+.admin-broadcast-container {
   display: flex;
   flex-direction: column;
   height: 50vh;
@@ -42,16 +68,5 @@
       background-color: $CDarkGreen;
       transition: 0.25s;
     }
-  }
-  p {
-    padding: 1.5em 0 0 0;
-  }
-  .link {
-    text-decoration: none;
-    color: $CWhite;
-  }
-  .link:hover {
-    color: $CDarkGreen;
-    transition: 0.25s;
   }
 }

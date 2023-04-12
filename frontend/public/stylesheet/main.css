@@ -5,15 +5,30 @@
 }
 
 header {
+  position: absolute;
   display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
   justify-content: space-between;
+  padding: 1em 0 2em 0;
 }
 header h1 {
   animation: 5s ease-in infinite rotation;
-  margin-left: 1em;
+  margin: 0 1em 0 1em;
 }
 header button {
-  height: 2em;
+  margin: 0 1em 0 1em;
+  padding: 0.5em 1em;
+  font-size: 1.25rem;
+  border-radius: 0.5em;
+  color: #d9d9d9;
+  background-color: #071833;
+  border: 3px solid #6bba41;
+  transition: color 0.1s;
+}
+header button:hover {
+  color: #6bba41;
 }
 
 @keyframes rotation {
@@ -41,6 +56,7 @@ header button {
 .main-container {
   display: flex;
   justify-content: space-between;
+  width: 100vw;
   height: 70vh;
 }
 .main-container .channels-container {
@@ -55,6 +71,14 @@ header button {
   position: absolute;
   top: 1em;
   left: 1em;
+}
+.main-container .channels-container .admin-container button {
+  padding: 0.25em;
+  border-radius: 0.5em;
+  color: #d9d9d9;
+  background-color: #071833;
+  border: 3px solid #6bba41;
+  transition: color 0.1s;
 }
 .main-container .channels-container .create-channel-container {
   display: flex;
@@ -101,6 +125,7 @@ header button {
 .main-container .channels-container .individual-channel .channel {
   border-bottom: 3px solid #6bba41;
   padding: 0 0 0.3em 0;
+  padding: 0.5em 0 0.5em 0;
 }
 
 .message-section {
@@ -108,6 +133,16 @@ header button {
   padding: 1em;
   border-radius: 0.25em;
   border: 3px solid #6bba41;
+}
+.message-section button {
+  margin: 0.5em 0;
+  padding: 0.5em 1em;
+  font-size: 1.25rem;
+  border-radius: 0.5em;
+  color: #d9d9d9;
+  background-color: #071833;
+  border: 3px solid #6bba41;
+  transition: color 0.1s;
 }
 .message-section .message-container {
   position: relative;
@@ -120,10 +155,14 @@ header button {
 .message-section .message-container .message {
   position: relative;
   display: block;
-  width: 80%;
+  width: 75%;
+  max-width: 300px;
   margin-bottom: 3em;
-  padding: 0.25em;
+  padding: 1em;
   border-radius: 0.25em;
+}
+.message-section .message-container p {
+  line-break: anywhere;
 }
 .message-section .message-container .message::after {
   width: 25px;
@@ -133,7 +172,7 @@ header button {
 }
 .message-section .message-container .message:nth-child(odd) {
   background-color: #3a5a8d;
-  margin-right: 0.25em;
+  margin-right: 1em;
   margin-left: auto;
 }
 .message-section .message-container .message:nth-child(odd)::after {
@@ -148,7 +187,7 @@ header button {
   background-color: #d9d9d9;
   color: #01060d;
   margin-right: auto;
-  margin-left: 0.25em;
+  margin-left: 1em;
 }
 .message-section .message-container .message:nth-child(even)::after {
   left: -10px;
@@ -172,15 +211,174 @@ header button {
   border: 0.15em solid #01060d;
 }
 .message-section form button,
-.message-section form input {
+.message-section form textarea {
   border: none;
   border-radius: 0.25em;
   color: #d9d9d9;
   background-color: #3a5a8d;
   font-size: 1.25rem;
 }
+.message-section form textarea {
+  height: 4rem;
+  resize: none;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  min-height: 350px;
+  width: 30vw;
+  text-align: center;
+  background-color: #071833;
+  border-radius: 0.25em;
+  box-shadow: 0 0 15px black;
+}
+.login-container h1 {
+  padding: 1em 0;
+}
+.login-container form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+}
+.login-container form input,
+.login-container form button {
+  border-radius: 0.5em;
+  font-size: 1.25rem;
+}
+.login-container form input {
+  height: 2.5em;
+  width: 70%;
+  background-color: #3a5a8d;
+  border: 3px solid #3f831b;
+}
+.login-container form button {
+  height: 2.5em;
+  width: 50%;
+  background-color: #3a5a8d;
+  border: none;
+}
+.login-container form button:hover {
+  background-color: #3f831b;
+  transition: 0.25s;
+}
+.login-container p {
+  padding: 1.5em 0 0 0;
+}
+.login-container .link {
+  text-decoration: none;
+  color: #d9d9d9;
+}
+.login-container .link:hover {
+  color: #3f831b;
+  transition: 0.25s;
+}
+
+.account-created,
+.create-account-form {
+  background-color: #071833;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  margin: 0 auto;
+  padding: 3em 2em;
+  max-width: 15em;
+  border-radius: 0.25em;
+  box-shadow: 0 0 15px black;
+}
+.account-created h1,
+.create-account-form h1 {
+  text-align: center;
+}
+.account-created input,
+.create-account-form input {
+  border: solid 3px #3f831b;
+}
+.account-created input,
+.account-created button,
+.create-account-form input,
+.create-account-form button {
+  background-color: #3a5a8d;
+  transition: background-color 0.25s;
+  color: #d9d9d9;
+  padding: 0.5em 0.25em;
+  font-size: 1.25rem;
+  border-radius: 0.5em;
+}
+.account-created button:hover,
+.create-account-form button:hover {
+  background-color: #3f831b;
+}
+
+.account-created {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.admin-broadcast-container {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  min-height: 350px;
+  width: 30vw;
+  text-align: center;
+  background-color: #071833;
+  border-radius: 0.25em;
+  box-shadow: 0 0 15px black;
+}
+.admin-broadcast-container h1 {
+  padding: 1em 0;
+}
+.admin-broadcast-container form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+}
+.admin-broadcast-container form input,
+.admin-broadcast-container form button {
+  border-radius: 0.5em;
+  font-size: 1.25rem;
+}
+.admin-broadcast-container form input {
+  height: 2.5em;
+  width: 70%;
+  background-color: #3a5a8d;
+  border: 3px solid #3f831b;
+}
+.admin-broadcast-container form button {
+  height: 2.5em;
+  width: 50%;
+  background-color: #3a5a8d;
+  border: none;
+}
+.admin-broadcast-container form button:hover {
+  background-color: #3f831b;
+  transition: 0.25s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
 
 body {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
   background-color: #3a5a8d;
   color: #d9d9d9;
 }/*# sourceMappingURL=main.css.map */

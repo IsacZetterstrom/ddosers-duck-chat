@@ -13,11 +13,18 @@ export default function Admin() {
   }
 
   return (
-    <div>
+    <div className="admin-broadcast-container">
+      <h1>Emergency Broadcast</h1>
       <form onSubmit={broadcastMessage}>
         <input name="title" required placeholder="Title..." />
         <input name="message" required placeholder="Message..." />
         <button type="submit">Broadcast message</button>
+        <button
+          onClick={() => {
+            navigate("/channels");
+          }}>
+          Channels
+        </button>
       </form>
     </div>
   );

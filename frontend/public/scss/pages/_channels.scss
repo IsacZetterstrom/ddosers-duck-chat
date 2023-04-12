@@ -5,14 +5,31 @@
   display: none;
 }
 header {
+  position: absolute;
   display: flex;
+
+  top: 0;
+  left: 0;
+  width: 100%;
   justify-content: space-between;
+
+  padding: 1em 0 2em 0;
   h1 {
     animation: 5s ease-in infinite rotation;
-    margin-left: 1em;
+    margin: 0 1em 0 1em;
   }
   button {
-    height: 2em;
+    margin: 0 1em 0 1em;
+    padding: 0.5em 1em;
+    font-size: 1.25rem;
+    border-radius: 0.5em;
+    color: $CWhite;
+    background-color: $CDarkerBlue;
+    border: 3px solid $CBrightGreen;
+    transition: color 0.1s;
+  }
+  button:hover {
+    color: $CBrightGreen;
   }
 }
 
@@ -42,6 +59,7 @@ header {
 .main-container {
   display: flex;
   justify-content: space-between;
+  width: 100vw;
   height: 70vh;
   .channels-container {
     width: 30%;
@@ -55,6 +73,14 @@ header {
       position: absolute;
       top: 1em;
       left: 1em;
+      button {
+        padding: 0.25em;
+        border-radius: 0.5em;
+        color: $CWhite;
+        background-color: $CDarkerBlue;
+        border: 3px solid $CBrightGreen;
+        transition: color 0.1s;
+      }
     }
     .create-channel-container {
       display: flex;
@@ -102,6 +128,7 @@ header {
       .channel {
         border-bottom: 3px solid $CBrightGreen;
         padding: 0 0 0.3em 0;
+        padding: 0.5em 0 0.5em 0;
       }
     }
   }
@@ -112,6 +139,16 @@ header {
   padding: 1em;
   border-radius: 0.25em;
   border: 3px solid $CBrightGreen;
+  button {
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
+    font-size: 1.25rem;
+    border-radius: 0.5em;
+    color: $CWhite;
+    background-color: $CDarkerBlue;
+    border: 3px solid $CBrightGreen;
+    transition: color 0.1s;
+  }
   .message-container {
     position: relative;
     display: block;
@@ -122,10 +159,14 @@ header {
     .message {
       position: relative;
       display: block;
-      width: 80%;
+      width: 75%;
+      max-width: 300px;
       margin-bottom: 3em;
-      padding: 0.25em;
+      padding: 1em;
       border-radius: 0.25em;
+    }
+    p {
+      line-break: anywhere;
     }
     .message::after {
       width: 25px;
@@ -135,7 +176,7 @@ header {
     }
     .message:nth-child(odd) {
       background-color: $CBlue;
-      margin-right: 0.25em;
+      margin-right: 1em;
       margin-left: auto;
     }
     .message:nth-child(odd)::after {
@@ -150,7 +191,7 @@ header {
       background-color: $CWhite;
       color: $CBlack;
       margin-right: auto;
-      margin-left: 0.25em;
+      margin-left: 1em;
     }
     .message:nth-child(even)::after {
       left: -10px;
@@ -175,12 +216,16 @@ header {
       border: 0.15em solid $CBlack;
     }
     button,
-    input {
+    textarea {
       border: none;
       border-radius: 0.25em;
       color: $CWhite;
       background-color: $CBlue;
       font-size: 1.25rem;
+    }
+    textarea {
+      height: 4rem;
+      resize: none;
     }
   }
 }

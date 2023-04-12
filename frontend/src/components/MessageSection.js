@@ -2,7 +2,7 @@ export default function MessageSection(props) {
   return (
     <section className="message-section">
       {props.channel !== undefined &&
-        props.channels[props.channel].channelType === "public" && (
+        props.channels[props.channel].name !== "Nödkanal" && (
           <button onClick={props.deleteChannel}>Delete channel</button>
         )}
       <div className="message-container">
@@ -28,7 +28,7 @@ export default function MessageSection(props) {
       {props.channel !== undefined &&
         props.channels[props.channel].name !== "Nödkanal" && (
           <form onSubmit={props.sendMessage}>
-            <input name="message" placeholder="Write Message..." required />
+            <textarea name="message" placeholder="Write Message..." required />
             <button type="submit">Send</button>
           </form>
         )}

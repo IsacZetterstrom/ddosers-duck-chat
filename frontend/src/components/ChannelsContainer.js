@@ -24,6 +24,7 @@ export default function ChannelContainer(props) {
             <h2
               className="channel"
               key={"channel-name-" + index}
+              style={index === props.channel ? { color: "#6bba41" } : {}}
               onClick={() => props.onChannelClick(index)}>
               {element.name}
             </h2>

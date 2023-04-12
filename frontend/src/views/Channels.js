@@ -28,7 +28,7 @@ export default function Channels() {
       json
     );
 
-    event.target.querySelector("input").value = "";
+    event.target.querySelector("textarea").value = "";
   }
   async function deleteChannel(event) {
     event.preventDefault();
@@ -84,6 +84,7 @@ export default function Channels() {
           createChannel={createChannel}
           onChannelClick={onChannelClick}
           channels={channels}
+          channel={channel}
         />
         <MessageSection
           deleteChannel={deleteChannel}

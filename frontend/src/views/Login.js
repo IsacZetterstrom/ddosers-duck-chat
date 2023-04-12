@@ -1,5 +1,6 @@
 import { fetchJson, getFormData } from "../fetch";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function Login() {
   }
   return (
     <div className="login-container">
+      <h1>Login</h1>
       <form onSubmit={loginForm}>
         <input
           className="login-name"
@@ -40,6 +42,10 @@ export default function Login() {
         />
         <button type="submit">Login</button>
       </form>
+      <p>Don't have an account?</p>
+      <Link to={"/createUser"} className="link">
+        Create account
+      </Link>
     </div>
   );
 }

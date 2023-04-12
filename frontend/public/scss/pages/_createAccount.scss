@@ -1,0 +1,38 @@
+@use "../abstract/variables" as *;
+
+.account-created,
+.create-account-form {
+  background-color: $CDarkerBlue;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  margin: 0 auto;
+  padding: 3em 2em;
+  max-width: 15em;
+  border-radius: 0.25em;
+  box-shadow: 0 0 15px black;
+  h1 {
+    text-align: center;
+  }
+  input {
+    border: solid 3px $CDarkGreen;
+  }
+  input,
+  button {
+    background-color: $CBlue;
+    transition: background-color 0.25s;
+    color: $CWhite;
+    padding: 0.5em 0.25em;
+    font-size: 1.25rem;
+    border-radius: 0.5em;
+  }
+  button:hover {
+    background-color: $CDarkGreen;
+  }
+}
+
+.account-created {
+  text-align: center;
+  font-size: 1.25rem;
+}

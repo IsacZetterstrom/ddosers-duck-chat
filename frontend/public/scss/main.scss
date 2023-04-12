@@ -1,7 +1,24 @@
 @use "./abstract/variables" as *;
 @use "./pages/channels" as *;
 @use "./pages/login" as *;
+@use "./pages/createAccount" as *;
+@use "./pages/header" as *;
+@use "./pages/admin" as *;
+* {
+  margin: 0;
+  padding: 0;
+}
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
 body {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
   background-color: $CBlue;
   color: $CWhite;
 }
