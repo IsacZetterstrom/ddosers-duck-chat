@@ -1,9 +1,11 @@
 import { fetchJson, getFormData } from "../fetch";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [serverMessage, setServerMessage] = useState("");
 
   async function loginForm(event) {
     event.preventDefault();
@@ -22,6 +24,7 @@ export default function Login() {
       window.sessionStorage.setItem("userRole", data.userRole);
       navigate("/channels");
     } else {
+      setServerMessage("Användarnamn eller lösenord är felaktigt");
       console.log("fel användare");
     }
   }
@@ -40,6 +43,7 @@ export default function Login() {
           type="password"
           name="password"
         />
+        <p>{serverMessage}</p>
         <button type="submit">Login</button>
       </form>
       <p>Don't have an account?</p>
