@@ -1,10 +1,11 @@
 import { io } from "socket.io-client";
 import { useState, useEffect, useRef } from "react";
 import { fetchJson, getFormData } from "../fetch";
-import { useNavigate } from "react-router-dom";
+import MessageSection from "../components/MessageSection";
+import ChannelContainer from "../components/ChannelsContainer";
+import Header from "../components/Header";
 
 export default function Channels() {
-  const navigate = useNavigate();
   const [channels, setChannels] = useState([]);
   const [channel, setChannel] = useState(undefined);
   const [clientIo, setIo] = useState();
@@ -42,6 +43,7 @@ export default function Channels() {
       "PUT",
       getFormData(event.target)
     );
+    event.target.querySelector("input").value = "";
   }
 
   useEffect(() => {
@@ -77,71 +79,21 @@ export default function Channels() {
   }, [setIo, setChannel, setChannels, channels]);
 
   return (
-    <main className="main-container">
-      <div className="channels-container">
-        <div className="admin-container">
-          {" "}
-          {window.sessionStorage.getItem("userRole") === "admin" && (
-            <button onClick={() => navigate("/admin")}>Admin</button>
-          )}
-        </div>
-        <div className="create-channel-container">
-          <form onSubmit={createChannel}>
-            <input name="name" placeholder="Channel name..." required />
-            <button type="submit">Create channel</button>
-          </form>
-          <h2 className="channel-header">Channels</h2>
-          <div className="individual-channel">
-            {channels.map((element, index) => {
-              return (
-                <h2
-                  className="channel"
-                  key={"channel-name-" + index}
-                  onClick={() => onChannelClick(index)}>
-                  {element.name}
-                </h2>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <section className="message-section">
-        {channel !== undefined &&
-          channels[channel].channelType === "public" && (
-            <button onClick={deleteChannel}>Delete channel</button>
-          )}
-        <div className="message-container">
-          {channel !== undefined &&
-            (() => {
-              const newchannels = channels[channel].messages.map(
-                (element, index) => {
-                  return (
-                    <div
-                      className="message"
-                      key={element._id || "message-id-" + index}>
-                      <h3>{element.sender || element.title}</h3>
-                      <p>{element.message}</p>
-                    </div>
-                  );
-                }
-              );
-              setTimeout(() => {
-                const messageCont =
-                  document.querySelector(".message-container");
-                messageCont.scrollTo(0, messageCont.scrollHeight);
-              }, 50);
-              return newchannels;
-            })()}
-        </div>
-        {channel !== undefined &&
-          channels[channel].channelType === "public" && (
-            <form onSubmit={sendMessage}>
-              <input name="message" placeholder="Write Message..." required />
-              <button type="submit">Send</button>
-            </form>
-          )}
-      </section>
-    </main>
+    <>
+      <Header />
+      <main className="main-container">
+        <ChannelContainer
+          createChannel={createChannel}
+          onChannelClick={onChannelClick}
+          channels={channels}
+        />
+        <MessageSection
+          deleteChannel={deleteChannel}
+          channel={channel}
+          channels={channels}
+          sendMessage={sendMessage}
+        />
+      </main>
+    </>
   );
 }

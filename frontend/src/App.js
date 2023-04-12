@@ -8,10 +8,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <h1>Duck</h1>
         <Routes>
+          <Route index element={<Login />} />
           <Route path="/createUser" element={<CreateUser />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/channels" element={<Channels />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
