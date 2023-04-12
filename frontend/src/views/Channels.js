@@ -8,11 +8,13 @@ import Header from "../components/Header";
 export default function Channels() {
   const [channels, setChannels] = useState([]);
   const [channel, setChannel] = useState(undefined);
+  const [messages, setMessages] = useState(undefined);
   const [clientIo, setIo] = useState();
   const ref = useRef(false);
 
   function onChannelClick(channelIndex) {
     setChannel(channelIndex);
+    clientIo.emit("channelListening", channels[channelIndex]._id);
   }
 
   async function sendMessage(event) {
@@ -63,16 +65,12 @@ export default function Channels() {
         });
       });
       newIo.on("newMessage", (value) => {
-        setChannels((oldValue) => {
-          const newValue = JSON.parse(JSON.stringify(oldValue));
-          const foundChannel = newValue.find(
-            (element) => element._id === value.channelId
-          );
-
-          foundChannel.messages.push(value.newMessage);
-
-          return newValue;
-        });
+        console.log(value);
+        if (value.length || value.length === 0) {
+          setMessages(value);
+        } else {
+          setMessages((oldValue) => [...oldValue, value]);
+        }
       });
       setIo(newIo);
     }
@@ -91,6 +89,7 @@ export default function Channels() {
           deleteChannel={deleteChannel}
           channel={channel}
           channels={channels}
+          messages={messages}
           sendMessage={sendMessage}
         />
       </main>

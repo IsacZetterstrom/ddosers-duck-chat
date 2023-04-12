@@ -1,6 +1,5 @@
 import { Channel } from "../db/models/Channel.js";
 import { Message } from "../db/models/newMessage.js";
-import { User } from "../db/models/User.js";
 import jwtUtil from "../utils/jwtUtil.js";
 import fetch from "node-fetch";
 
@@ -8,29 +7,25 @@ function getChannels(req, res) {
   const id = req.query.id;
 
   if (id) {
-    getChannelById(req, res, id);
+    getChannelDataById(req, res, id);
   } else {
     getAllChannels(req, res);
   }
 }
-
-//<<<< ============================
-async function getChannelById(req, res, _id) {
+async function getChannelDataById(req, res, _id) {
   try {
     const channel = await Channel.findOne({
       _id, // samma som _id:_id
-      channelType: "public",
     });
 
-    res.send(channel);
+    res.send(channel.messages);
   } catch (error) {
     res.status(400).send("Channel does not exist");
   }
 }
 
 async function getAllChannels(req, res) {
-  //<<<< ============================
-  const channels = await Channel.find({ channelType: "public" });
+  const channels = await Channel.find({ channelType: "public" }, "_id name");
 
   res.send(channels);
 }
