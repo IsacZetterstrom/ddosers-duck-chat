@@ -24,6 +24,8 @@ export default function Channels() {
       "POST",
       json
     );
+
+    event.target.querySelector("input").value = "";
   }
   async function deleteChannel(event) {
     event.preventDefault();
