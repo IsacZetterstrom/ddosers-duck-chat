@@ -72,10 +72,24 @@ async function postChannel(req, res) {
       sender,
       message,
     });
-    const channel = await Channel.updateOne(
-      { _id: channelId },
-      { $push: { messages: newMessage } }
-    );
+
+    try {
+      const result = await Channel.updateOne(
+        { _id: channelId },
+        { $push: { messages: newMessage } }
+      );
+      if (result.modifiedCount > 0) {
+        res.status(201).send("message sent");
+      } else {
+        console.log(result);
+        res.status(400).send("Channel not found!");
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send("Bad Id");
+      return;
+    }
 
     try {
       const token = jwtUtil.createToken({ role: "express-server" });
@@ -95,8 +109,6 @@ async function postChannel(req, res) {
     } catch (error) {
       console.log(error);
     }
-
-    res.status(201).send("message sent");
   } else {
     res.status(400).send("Missing information");
   }
@@ -106,14 +118,22 @@ async function deleteChannel(req, res) {
   const channelId = req.query.id;
   if (channelId != undefined) {
     const user = req.jwtPayload.username;
+    try {
+      const result = await Channel.deleteOne({
+        _id: channelId,
+        creator: user,
+        channelType: "public",
+      });
 
-    const result = await Channel.deleteOne({
-      _id: channelId,
-      creator: user,
-      channelType: "public",
-    });
-    console.log(result);
-    res.status(200).send("Deleted channel");
+      if (result.deletedCount > 0) {
+        res.status(200).send("Deleted channel");
+      } else {
+        res.status(400).send("Channel not found or not the creator");
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send("Bad ID");
+    }
   } else {
     res.status(400).send("Channel ID not provided");
   }

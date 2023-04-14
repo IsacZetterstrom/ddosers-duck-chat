@@ -8,7 +8,11 @@ async function getBroadcast(req, res) {
     "name _id"
   );
 
-  res.send(channel);
+  if (channel) {
+    res.send(channel);
+  } else {
+    res.status(503).send("The broadcast channel does not exist!");
+  }
 }
 
 async function postBroadcast(req, res) {

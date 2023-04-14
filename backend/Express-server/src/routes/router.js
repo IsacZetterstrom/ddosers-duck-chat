@@ -9,7 +9,7 @@ const router = express.Router();
 router.route("/user").post(UserController.login).put(UserController.createUser);
 
 router
-  .route("/channel*")
+  .route("/channel")
   .get(ChannelController.getChannels)
   .put(authenticated.authenticate, ChannelController.putChannel)
   .post(authenticated.authenticate, ChannelController.postChannel)
