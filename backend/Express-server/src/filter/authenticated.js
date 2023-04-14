@@ -12,7 +12,7 @@ function authenticate(req, res, next) {
       req.jwtPayload = payload;
       next();
     } else {
-      res.status(400).send("Your token is invalid!");
+      res.status(401).send("Not authorized!");
     }
   } catch (error) {
     console.log(error);
