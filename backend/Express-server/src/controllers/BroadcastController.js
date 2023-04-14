@@ -20,10 +20,23 @@ async function postBroadcast(req, res) {
 
   if (title && message) {
     const newMessage = { title, message };
-    const result = await Channel.updateOne(
-      { channelType: "nödkanal" },
-      { $push: { messages: newMessage } }
-    );
+
+    try {
+      const result = await Channel.updateOne(
+        { channelType: "nödkanal" },
+        { $push: { messages: newMessage } }
+      );
+      if (result.modifiedCount > 0) {
+        res.status(201).send("The message was broadcasted!");
+      } else {
+        res.status(503).send("Something went wrong!");
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(503).send("Server is unavailable");
+      return;
+    }
 
     const emergencyChannel = await Channel.findOne({ channelType: "nödkanal" });
 
@@ -42,10 +55,8 @@ async function postBroadcast(req, res) {
     } catch (error) {
       console.log(error);
     }
-
-    res.send(result);
   } else {
-    res.send("You need to supply a title and content!");
+    res.status(400).send("You need to supply a title and content!");
   }
 }
 
