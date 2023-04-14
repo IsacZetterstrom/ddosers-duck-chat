@@ -36,18 +36,23 @@ function onWsDisconnect(ws) {
 }
 
 async function getChannels() {
-  const mainChannels = await (
-    await fetch("http://localhost:3001/ducks/api/channel", {
-      method: "GET",
-    })
-  ).json();
-  const broadcastChannel = await (
-    await fetch("http://localhost:3001/ducks/api/broadcast", {
-      method: "GET",
-    })
-  ).json();
+  try {
+    const mainChannels = await (
+      await fetch("http://localhost:3001/ducks/api/channel", {
+        method: "GET",
+      })
+    ).json();
+    const broadcastChannel = await (
+      await fetch("http://localhost:3001/ducks/api/broadcast", {
+        method: "GET",
+      })
+    ).json();
 
-  return [broadcastChannel, ...mainChannels];
+    return [broadcastChannel, ...mainChannels];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
 
 export default onWsConnect;
